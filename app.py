@@ -24,7 +24,7 @@ os.chdir(os.path.dirname(__file__))
 
 @app.route('/')
 def input_data(): 
-    return render_template('https://fifa-app-ml.herokuapp.com/template/index.html') 
+    return render_template('index.html') 
 
 
 model=joblib.load('/src/model/modelo_entrenado_fot.pkl')
