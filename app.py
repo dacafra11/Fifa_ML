@@ -85,7 +85,7 @@ def uploadFiles():
            return render_template('Result_Limp.html', 
                             shape = data_Fifa.shape,
                             table = table)
-    #   return redirect(url_for('Limp'))
+        return redirect(url_for('Limp'))
       return render_template('Limp2.html')
 
 @app.route("/contact", methods=['POST','GET'])
