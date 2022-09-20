@@ -61,7 +61,7 @@ def input():
         predicted_result = round(predicted_result,2)
         predicted_result=int(predicted_result)
         predicted_result=str(predicted_result)
-        return render_template('template/Pred_resul.html', predicted = predicted_result) 
+        return render_template('Pred_resul.html', predicted = predicted_result) 
     return render_template('Pred_m.html')
 
 # Limpia y genera el modelo de entrenamiento y guarda a csv el modelo de df
@@ -82,7 +82,7 @@ def uploadFiles():
            data_Fifa.to_csv("C:/src/model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
            table = data_Fifa.to_html(index=False)
            u.entrena_modelo(data_Fifa)
-           return render_template('template/Result_Limp.html', 
+           return render_template('Result_Limp.html', 
                             shape = data_Fifa.shape,
                             table = table)
     #   return redirect(url_for('Limp'))
@@ -104,7 +104,7 @@ def upload_file():
       pred_result2=int(pred_result2)
       pred_result2 = round(pred_result2,2)
       pred_result2=str(pred_result2)        
-      return render_template('template/Pred_resul.html', predicted = pred_result2)
+      return render_template('Pred_resul.html', predicted = pred_result2)
    return render_template('Pred_a.html')  
 
 
