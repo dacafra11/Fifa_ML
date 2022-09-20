@@ -27,7 +27,7 @@ def input_data():
     return render_template('index.html') 
 
 
-model=joblib.load('/src/model/modelo_entrenado_fot.pkl')
+model=joblib.load('./model/modelo_entrenado_fot.pkl')
 # redondear y modificart reshape
 def prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,model): 
     pre_data = np.array([s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14]) 
