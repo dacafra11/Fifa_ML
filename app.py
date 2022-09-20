@@ -85,7 +85,7 @@ def uploadFiles():
            return render_template('Result_Limp.html', 
                             shape = data_Fifa.shape,
                             table = table)
-        return redirect(url_for('contact.html'))
+    #   return redirect(url_for('Limp'))
       return render_template('Limp.html')
 
 @app.route("/contact", methods=['POST','GET'])
@@ -95,7 +95,7 @@ def contact():
 # Entrene automatico
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
-   model=joblib.load('./model/modelo_entrenado_fot.pkl') #se deberia poder eliminar
+   #model=joblib.load('./model/modelo_entrenado_fot.pkl') #se deberia poder eliminar
    if request.method == 'POST':
       df =  pd.read_csv("./model/my_model_FOT.csv")
       df= df.drop(["Overall"], axis =1)
