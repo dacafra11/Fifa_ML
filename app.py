@@ -79,14 +79,14 @@ def uploadFiles():
            data_Fifa=u.borrar(data_Fifa)
            data_Fifa=u.normalizar_categor(data_Fifa)
            data_Fifa= data_Fifa.round(2)
-           #data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
+           data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
            table = data_Fifa.to_html(index=False)
            u.entrena_modelo(data_Fifa)
            return render_template('Result_Limp.html', 
                             shape = data_Fifa.shape,
                             table = table)
-        return redirect(url_for('Limp'))
-      return render_template('Limp2.html')
+        return redirect(url_for('contact.html'))
+      return render_template('Limp.html')
 
 @app.route("/contact", methods=['POST','GET'])
 def contact():
