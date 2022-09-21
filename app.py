@@ -1,22 +1,12 @@
-#! -*- conding: utf-8 -*-
-#from flask_menu import Menu, register_menu
-import numpy as np
-import pandas as pd
 from flask import Flask, request, render_template, url_for, redirect
-import pickle
+import os
 import joblib
+from utility import utils2 as u 
+import pandas as pd
+import numpy as np
 import lightgbm as lgb
 from lightgbm import LGBMRegressor
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import KFold, cross_val_score, train_test_split
-from utility import utils2 as u 
-import seaborn as sns
-import missingno as msno
-import openpyxl
-import urllib.request
-from PIL import Image
-from werkzeug.utils import secure_filename 
-import os 
+
 
 app = Flask(__name__)
 
@@ -26,9 +16,8 @@ os.chdir(os.path.dirname(__file__))
 def input_data(): 
     return render_template('index.html') 
 
-
 model=joblib.load('./model/modelo_entrenado_fot.pkl')
-# redondear y modificart reshape
+
 def prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,model): 
     pre_data = np.array([s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14]) 
     pre_data_reshape = pre_data.reshape(1, -1) 
@@ -38,8 +27,7 @@ def prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,mode
 @app.route('/result', methods=["POST", "GET"]) 
 
 def input(): 
-    
-    
+        
     if request.method == "POST": 
         s_1 = float(request.form['s_1'])
         s_2 = float(request.form['s_2'])
@@ -57,7 +45,6 @@ def input():
         s_14 = float(request.form['s_14'])
 
         predicted_result = prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,model)  
-         
         predicted_result = round(predicted_result,2)
         predicted_result=int(predicted_result)
         predicted_result=str(predicted_result)
@@ -87,47 +74,6 @@ def uploadFiles():
                             table = table)
     return render_template('Limp.html')
 
-      # get the uploaded file
-    #    uploaded_file = request.files['file']
-    #    return render_template('Limp.html')
-    #    if request.method == "POST": 
-    #     return render_template('Pred_a.html')
-    #    else:
-        
-    #     if uploaded_file.filename != '':
-    #         data_Fifa = pd.read_csv(request.files.get('file'))
-
-    #         data_Fifa =u.modificar_dataframe(data_Fifa)
-    #         data_Fifa=u.borrar(data_Fifa)
-    #         data_Fifa=u.normalizar_categor(data_Fifa)
-    #         data_Fifa= data_Fifa.round(2)
-    #         data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
-    #         table = data_Fifa.to_html(index=False)
-    #         u.entrena_modelo(data_Fifa)
-    #         return render_template('contact.html', 
-    #                             shape = data_Fifa.shape,
-    #                             table = table)
-    #     return render_template('contact.html')
-       
-    #      uploaded_file = request.files['file']
-    #      if uploaded_file.filename != '':
-       
-    #        data_Fifa = pd.read_csv(request.files.get('file'))
-
-    #        data_Fifa =u.modificar_dataframe(data_Fifa)
-    #        data_Fifa=u.borrar(data_Fifa)
-    #        data_Fifa=u.normalizar_categor(data_Fifa)
-    #        data_Fifa= data_Fifa.round(2)
-    #        #data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
-    #        table = data_Fifa.to_html(index=False)
-    #        u.entrena_modelo(data_Fifa)
-    #        return render_template('contact.html', 
-    #                         shape = data_Fifa.shape,
-    #                         table = table)
-    #      else:
-    #         return render_template('contact.html')
-    # # # #   return redirect(url_for('Limp'))
-    # #    return render_template('Limp.html')
 
 @app.route("/contact", methods=['POST','GET'])
 def contact():

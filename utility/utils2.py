@@ -205,3 +205,9 @@ def entrena_modelo(df_Fifa):
     prediction_lightgbm = lightgbm.predict(X_test)
 
     joblib.dump(lightgbm, 'modelo_entrenado_fot.pkl') # Guardo el modelo.    
+
+def prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,model):
+    pre_data = np.array([s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14]) 
+    pre_data_reshape = pre_data.reshape(1, -1) 
+    pred_result = model.predict(pre_data_reshape)  
+    return pred_result[0]
