@@ -77,17 +77,9 @@ def uploadFiles():
            data_Fifa =u.modificar_dataframe(data_Fifa)
            data_Fifa=u.borrar(data_Fifa)
            data_Fifa=u.normalizar_categor(data_Fifa)
+           data_Fifa= data_Fifa.round(2)
+           data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
            table = data_Fifa.to_html(index=False)
-
-        #  data_Fifa =u.modificar_dataframe(data_Fifa)
-    #      data_Fifa=u.borrar(data_Fifa)
-    #      data_Fifa=u.normalizar_categor(data_Fifa)
-    #      data_Fifa= data_Fifa.round(2)
-    #      data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
-    #      table = data_Fifa.to_html(index=False)
-    #      u.entrena_modelo(data_Fifa)
-
-
         #    f = request.files['file']
         #    f.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file))
            return render_template('Result_Limp.html', 
