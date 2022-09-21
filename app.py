@@ -89,6 +89,8 @@ def uploadFiles():
            return render_template('contact.html', 
                             shape = data_Fifa.shape,
                             table = table)
+         else:
+            return render_template('contact.html')
     # # #   return redirect(url_for('Limp'))
     #    return render_template('Limp.html')
 
