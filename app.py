@@ -71,6 +71,7 @@ def uploadFiles():
       # get the uploaded file
       if request.method == "POST": 
         uploaded_file = request.files['file']
+        return render_template('contact.html')
         if uploaded_file.filename != '':
        
            data_Fifa = pd.read_csv(request.files.get('file'))
@@ -82,11 +83,11 @@ def uploadFiles():
            data_Fifa.to_csv("./model/my_model_FOT.csv", sep=',', encoding="utf-8", index=False)
            table = data_Fifa.to_html(index=False)
            u.entrena_modelo(data_Fifa)
-           return redirect(url_for('Result_Limp.html',
+           return render_template('contact.html', 
                             shape = data_Fifa.shape,
-                            table = table))
+                            table = table)
     #   return redirect(url_for('Limp'))
-      return render_template('Limp.html')
+     # return render_template('Limp.html')
 
 @app.route("/contact", methods=['POST','GET'])
 def contact():
