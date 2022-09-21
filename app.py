@@ -68,6 +68,7 @@ def input():
 # para usar en automatico y manual.
 @app.route("/result2", methods=['POST','GET'])
 def uploadFiles():
+    if request.method == "POST": 
         uploaded_file = request.files['file']
         if uploaded_file.filename != '':
        
@@ -92,7 +93,7 @@ def uploadFiles():
            return render_template('Result_Limp.html', 
                             shape = data_Fifa.shape,
                             table = table)
-        return redirect(url_for('upload'))
+    return render_template('Limp.html')
 
       # get the uploaded file
     #    uploaded_file = request.files['file']
