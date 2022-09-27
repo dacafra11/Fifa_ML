@@ -43,7 +43,7 @@ def input():
         s_12 = float(request.form['s_12'])
         s_13 = float(request.form['s_13'])
         s_14 = float(request.form['s_14'])
-        s_15 = float(request.form['s_15'])
+        s_15 = float(request.form['s_1'])
 
         predicted_result = prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,s_15,model)  
         predicted_result = round(predicted_result,2)
