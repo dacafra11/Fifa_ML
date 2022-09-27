@@ -18,8 +18,8 @@ def input_data():
 
 model=joblib.load('./model/modelo_entrenado_fot.pkl')
 
-def prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,model): 
-    pre_data = np.array([s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14]) 
+def prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,s_15,model): 
+    pre_data = np.array([s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,s_15]) 
     pre_data_reshape = pre_data.reshape(1, -1) 
     pred_result = model.predict(pre_data_reshape)  
     return pred_result[0]
@@ -43,8 +43,9 @@ def input():
         s_12 = float(request.form['s_12'])
         s_13 = float(request.form['s_13'])
         s_14 = float(request.form['s_14'])
+        s_15 = float(request.form['s_15'])
 
-        predicted_result = prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,model)  
+        predicted_result = prediction(s_1,s_2,s_3,s_4,s_5,s_6,s_7,s_8,s_9,s_10,s_11,s_12,s_13,s_14,s_15,model)  
         predicted_result = round(predicted_result,2)
         predicted_result=int(predicted_result)
         predicted_result=str(predicted_result)

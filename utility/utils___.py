@@ -10,34 +10,7 @@ import missingno as msno
 import openpyxl
 import sklearn
 from sklearn.model_selection import KFold, cross_val_score, train_test_split
-from sklearn.kernel_ridge import KernelRidge
-from sklearn.preprocessing import RobustScaler, LabelEncoder
-from sklearn.linear_model import Ridge
-from sklearn.model_selection import RepeatedKFold
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Lars
-from sklearn.naive_bayes import GaussianNB
-from sklearn import linear_model
-from sklearn.linear_model import OrthogonalMatchingPursuit
-from sklearn.linear_model import BayesianRidge
-from sklearn.linear_model import ARDRegression
-from sklearn.linear_model import PassiveAggressiveRegressor
-from sklearn.linear_model import HuberRegressor
-from sklearn.tree import DecisionTreeRegressor 
-from sklearn.ensemble import AdaBoostRegressor
-from xgboost import XGBRegressor
-from lightgbm import LGBMRegressor
-from catboost import CatBoostRegressor
-from sklearn.dummy import DummyRegressor
-import lightgbm as lgb
-from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LinearRegression
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.ensemble import ExtraTreesRegressor
-from sklearn.linear_model import ElasticNet, Lasso,  BayesianRidge, LassoLarsIC
-from sklearn.ensemble import RandomForestRegressor,  GradientBoostingRegressor
-from sklearn.metrics import mean_absolute_error,mean_absolute_percentage_error,mean_squared_error, r2_score
-import time
+
 warnings.filterwarnings('ignore') # Para evitar los molestos avisos.
 
 
@@ -618,17 +591,15 @@ def rmse_cv(model,X_train, y_train):
     return(rmse2)
 
 
-def models(mod2,X_test,X_train,y_test,y_train,df):
+def models(mod2,X_test,y_test,y_train,df):
 
     models = {"lr": LinearRegression(),"lasso":Lasso(),"dummy" : DummyRegressor(),
-    "catboost" : CatBoostRegressor(),"lightgbm" : LGBMRegressor(),
-    "xgboost" : XGBRegressor(),"gbr" : GradientBoostingRegressor(),
-    "ada" : AdaBoostRegressor(),"et" : ExtraTreesRegressor(),"lars" : Lars(),
-    "dt" : DecisionTreeRegressor(),"knn" : KNeighborsRegressor(),
-    "huber" : HuberRegressor(),"par" : PassiveAggressiveRegressor(),
-    "ard" : ARDRegression(),"br" : BayesianRidge(),"ridge" : Ridge(),
-    "omp" : OrthogonalMatchingPursuit(),"lassolars" : linear_model.LassoLars(),
-    "gnb" : GaussianNB(),"rf" : RandomForestRegressor(),"elastic" : ElasticNet(), "KRR" : KernelRidge()}
+               "catboost" : CatBoostRegressor(),"lightgbm" : lgb(),"xgboost" : XGBRegressor(),
+               "gbr" : GradientBoostingRegressor(),"ada" : AdaBoostRegressor(),"et" : ExtraTreesRegressor(),
+               "dt" : DecisionTreeRegressor(),"knn" : KNeighborsRegressor(),"huber" : HuberRegressor(),
+               "par" : PassiveAggressiveRegressor(),"ard" : ARDRegression(),"br" : BayesianRidge(),
+               "omp" : OrthogonalMatchingPursuit(),"lassolars" : linear_model.LassoLars(),"gnb" : GaussianNB(),
+               "rf" : RandomForestRegressor()}
     for model in mod2:
         if model in models:
             mod = models.get(model)
@@ -641,79 +612,3 @@ def models(mod2,X_test,X_train,y_test,y_train,df):
             tiempo=(fin-inicio)
             df=df.append({'Modelo':model,'MAE':MAE,'MSE':MSE,'RMSE':RMSE,"Time" :tiempo},ignore_index=True)
     return df
-
-def models2(mod2,X_train,y_train,df):
-    # score_mae
-    # score_rmse
-    # score_rmsle
-    models = {"lr": LinearRegression(),"lasso":Lasso(),"dummy" : DummyRegressor(),
-    "catboost" : CatBoostRegressor(),"lightgbm" : LGBMRegressor(),
-    "xgboost" : XGBRegressor(),"gbr" : GradientBoostingRegressor(),
-    "ada" : AdaBoostRegressor(),"et" : ExtraTreesRegressor(),"lars" : Lars(),
-    "dt" : DecisionTreeRegressor(),"knn" : KNeighborsRegressor(),
-    "huber" : HuberRegressor(),"par" : PassiveAggressiveRegressor(),
-    "ard" : ARDRegression(),"br" : BayesianRidge(),"ridge" : Ridge(),
-    "omp" : OrthogonalMatchingPursuit(),"lassolars" : linear_model.LassoLars(),
-    "gnb" : GaussianNB(),"rf" : RandomForestRegressor(),"elastic" : ElasticNet(), "KRR" : KernelRidge()}
-    for model in mod2:
-        if model in models:
-            mod = models.get(model)
-            mod.fit(X_train, y_train);
-            inicio = time.time()
-            score = mae_cv(mod,X_train,y_train)
-            score_mae = format(score.mean())
-            score2 = rmse_cv(mod,X_train, y_train)
-            score_rmse= format(score2.mean())
-            score3 = rmsle_cv(mod,X_train, y_train)
-            score_rmsle = format(score3.mean())
-            fin=time.time()
-            tiempo=(fin-inicio)
-            df=df.append({'Modelo':model,'MAE':score_mae,'MSE':score_rmse,'RMSE':score_rmsle,"Time" :tiempo},ignore_index=True)
-    return df
-
-def models3(mod2,X_train,y_train,df):
-    # score_mae
-    # score_rmse
-    # score_rmsle
-    models = {"lr": LinearRegression(fit_intercept=True, n_jobs=200),"catboost" : CatBoostRegressor(depth=10,learning_rate=0.1,iterations=100),
-              "lightgbm" : LGBMRegressor(),"xgboost" : XGBRegressor(objective='reg:squarederror', ),
-               "gbr" : GradientBoostingRegressor(n_estimators=10,learning_rate=0.0001,subsample=0.5,max_depth=3),
-               "et" : ExtraTreesRegressor(bootstrap=False, criterion='mse', 
-                                max_depth=None,max_features='auto', 
-                                max_leaf_nodes=None,min_impurity_decrease=0.0,
-                                min_samples_leaf=1, min_samples_split=2,
-                                min_weight_fraction_leaf=0.0,n_jobs=None, 
-                                oob_score=False, random_state=None, 
-                                verbose=0,warm_start=False),
-               "dt" : DecisionTreeRegressor(ccp_alpha=0.0, criterion='mse', max_depth=None,
-                      max_features=None, max_leaf_nodes=None,
-                      min_impurity_decrease=0.0,
-                      min_samples_leaf=1, min_samples_split=2,
-                      min_weight_fraction_leaf=0.0,random_state=123, splitter='best'),
-               "huber" : HuberRegressor(alpha=0.0001, epsilon=1.35, fit_intercept=True, max_iter=100,
-               tol=1e-05, warm_start=False),
-               "ard" : ARDRegression(n_iter=500, tol=0.001, alpha_1=1e-02, alpha_2=1e-02, 
-                         lambda_1=1e-02, lambda_2=1e-02, compute_score=False, 
-                         threshold_lambda=10000.0,fit_intercept=True, 
-                         copy_X=True, verbose=False),
-                "br" : BayesianRidge(alpha_1=1e-06, alpha_2=1e-06, alpha_init=None,
-                     compute_score=False, copy_X=True, fit_intercept=True,
-                     lambda_1=1e-06, lambda_2=1e-06, lambda_init=None, n_iter=300,
-                     normalize=False, tol=0.001, verbose=False),
-                "rf" : RandomForestRegressor(n_estimators= 200 , max_features=0.8,
-                       criterion="squared_error")}
-    for model in mod2:
-        if model in models:
-            mod = models.get(model)
-            mod.fit(X_train, y_train);
-            inicio = time.time()
-            score = mae_cv(mod,X_train,y_train)
-            score_mae = format(score.mean())
-            score2 = rmse_cv(mod,X_train, y_train)
-            score_rmse= format(score2.mean())
-            score3 = rmsle_cv(mod,X_train, y_train)
-            score_rmsle = format(score3.mean())
-            fin=time.time()
-            tiempo=(fin-inicio)
-            df=df.append({'Modelo':model,'MAE':score_mae,'MSE':score_rmse,'RMSE':score_rmsle,"Time" :tiempo},ignore_index=True)
-    return df   
